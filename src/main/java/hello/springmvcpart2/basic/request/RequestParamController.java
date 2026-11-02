@@ -100,6 +100,7 @@ public class RequestParamController {
 
     /**
      * MultiValueMap<String, Object> : 같은 이름의 요청 데이터가 있을 떄 사용!
+     * -> 파라미터 중복이 확실히 없을 때에는 Map 사용!!!
      */
     @RequestMapping("/request-param-multimap")
     @ResponseBody
