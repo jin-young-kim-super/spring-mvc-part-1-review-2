@@ -1,0 +1,4 @@
+String, int, Integer 등의 단순 타입 : @RequestParam 생략 가능
+개발자가 만든 객체 : @ModelAttribute 생략 가능(단, argument resolver에 예약돼 있는 객체에 대해서는 @ModelAttribute 적용 대상이 아니다)
+ex) public String modelAttributeV3(HelloData helloData, HttpServletResponse response)에서 HttpServletResponse는 argument resolver에 등록된 객체이므로 @ModelAttribute가 적용x
+->물론 내가 만든 객체를 argument resolver로 등록하여 그것도 @ModelAttribute 적용 안 되게 할 수가 있다. 

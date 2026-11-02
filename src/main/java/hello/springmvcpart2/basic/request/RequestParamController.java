@@ -1,11 +1,13 @@
 package hello.springmvcpart2.basic.request;
 
 
+import hello.springmvcpart2.basic.HelloData;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 /**
  * GET 쿼리 스트링, HTML Form 태그로 전송되는 요청 데이터 조회
+ * -> 만약 요청 데이터를 개발자가 만든 객체에 바인딩하고 싶을 때는 @ModelAttribute 사용
  */
 
 @Slf4j
@@ -109,4 +112,38 @@ public class RequestParamController {
         return "ok";
     }
 
+    @RequestMapping("/model-attribute-v1")
+    @ResponseBody
+    public String modelAttributeV1(@RequestParam String username, @RequestParam int age) {
+        // 요청 데이터를 객체에 바인딩
+        HelloData helloData = new HelloData();
+        helloData.setUsername(username);
+        helloData.setAge(age);
+
+        log.info("username = {} , age = {}",helloData.getUsername(),helloData.getAge());
+
+        return "ok";
+    }
+
+    // @ModelAttribute : HelloData 객체의 변수명을 보고 바인딩
+    // -> 절대 변수명이 다르면 안 된다.
+    @RequestMapping("/model-attribute-v2")
+    @ResponseBody
+    public String modelAttributeV2(@ModelAttribute HelloData helloData) {
+
+        log.info("username = {} , age = {}",helloData.getUsername(),helloData.getAge());
+
+        return "ok";
+    }
+
+    // @ModelAttribute 생략 가능 : 요청 데이터를 받을 때에만 가능! HTTP API 데이터
+    // -> 개인적으로 생략은 과한 느낌이 좀..ㅠㅠ
+    @RequestMapping("/model-attribute-v3")
+    @ResponseBody
+    public String modelAttributeV3(HelloData helloData) {
+
+        log.info("username = {} , age = {}",helloData.getUsername(),helloData.getAge());
+
+        return "ok";
+    }
 }
