@@ -1,0 +1,12 @@
+"HTTP 요청의 Accept 미디어 타입을 지원하는가.(더 정확히는 @RequestMapping 의 produces )"
+-> 이 말의 의미는 produces가 설정돼 있으면 produces를 보고 판단하고, produces가 설정돼 있지 않으면 Accept를 보고 미디어 타입 지원 여부를 판단!!
+
+"대상 클래스"
+・HTTP 요청의 경우 : 파라미터 클래스
+・HTTP 응담의 경우 : 반환 타입
+
+정리 
+●미디어 타입
+・Http 요청의 경우 : Contenty-Type로 체크
+・Http 응답의 경우 : Accept로 체크
+-> 즉 HttpMessageConverter에 각 미디어 타입을 지원하는 구현체(Json 메시지 구현체 등)가 있는 지를 체크하는 것이다. 
