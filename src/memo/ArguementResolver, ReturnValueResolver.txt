@@ -1,0 +1,32 @@
+ArugmentResolver와 ReturnValueResolver는 모든 어댑터가 아닌, RequestMappingHandlerAdapter가 지원하는 기능임을 헷갈리지 말자!
+
+
+ArgumentResolver의 실행 흐름(요청)
+-> RequestMappingHandlerAdapter 내부에서 대상 클래스(파라미터)를 보고 그 대상 클래스를 지원하는 ArugmentResolver(byte[] 처리용, String 처리용, Json 처리용 등)을 호출
+즉 모~~든 파라미터는 ArgumentResolver에 의해 생성 및 전달된다.
+※ 스프링은 30개가 넘는 ArgumentResovler를 제공
+
+ex) HttpServletResponse(ArugemntResolver 예약어?) 지원하는 ArgumentResovler(이 떄는 HttpMessageConverter가 아님에 주의!)에 의해 HttpServletResponse 객체 생성
+@GetMapping("/response-body-string-v1")
+public void responseBodyV1(HttpServletResponse response) throws IOException {
+   // 생략
+}
+
+ex) InputStream, Writer(ArgumentResolver 예약어?) 지원하는 ArugmentResolver(이 떄는 HttpMessageConverter가 아님에 주의!)에 의해 InputStream, Writer 객체 생성
+@PostMapping("/request-body-json-v2")
+public void requestBodyJsonV2(InputStream inputStream, Writer responseWriter) throws IOException {
+   // 생략
+}
+
+ex) 객체(대상 클래스)와 Accept를 보고 지원하는 ArugmentResolver(이 떄는 HttpMessageConverter임에 주의!)에 의해 HttpEntity<HelloData> 객체 생성
+@PostMapping("/request-body-json-v5")
+public String requestBodyJsonV5(HttpEntity<HelloData> data)  {
+    // 생략
+}
+
+ex) 객체(대상 클래스)와 Accept를 보고 지원하는 ArugmentResolver(이 떄는 HttpMessageConverter임에 주의!)에 의해 HelloData 객체 생성
+@PostMapping("/request-body-json-v4")
+public String requestBodyJsonV4(@RequestBody HelloData helloData)  {
+   // 생략
+}
+
