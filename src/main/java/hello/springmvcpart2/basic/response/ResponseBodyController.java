@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
 @Slf4j
-@Controller
+//@Controller
+@RestController // @RestController = @Controller + @ResponseBody
 public class ResponseBodyController {
 
     /**
@@ -29,7 +31,7 @@ public class ResponseBodyController {
         return new ResponseEntity<String>("ok", HttpStatus.OK);
     }
 
-    @ResponseBody
+   // @ResponseBody
     @GetMapping("/response-body-string-v3")
     public String responseBodyV3() {
         return "ok";
@@ -46,9 +48,9 @@ public class ResponseBodyController {
         return new ResponseEntity<>(helloData,HttpStatus.OK);
     }
 
-    @ResponseBody
+    //@ResponseBody
     // 만약에 HTTP Status를 동적으로 바꾸고 싶으면,위 ResponseEntity 사용!
-    @ResponseStatus(HttpStatus.OK)
+    //@ResponseStatus(HttpStatus.OK)
     @GetMapping("/response-body-json-v2")
     public HelloData responseBodyJsonV2() {
         HelloData helloData = new HelloData();
